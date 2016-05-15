@@ -37,5 +37,10 @@ namespace Assets.Scripts.Game
             c1.TweenTo(c1.defaultPosition, Quaternion.Euler(0, 90 - theta, 90));
             c2.TweenTo(c2.defaultPosition, Quaternion.Euler(0, 90 - theta, 90));
         }
+
+        public void ToScreenSpace(Vector2 position, float distance = 1f)
+        {
+            TweenTo(CameraControl.singleton.ScreenSpaceToWorldSpace(position, distance), Quaternion.Euler(0, 0, 310));
+        }
     }
 }

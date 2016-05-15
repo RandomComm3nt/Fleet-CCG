@@ -12,6 +12,8 @@ namespace Assets.Scripts.Game
         private CardSlot planetSlot;
         private CardSlot[][] ringSlots;
 
+        private List<CardSlot> playerHand;
+
         [SerializeField] private GameObject slotPrefab;
         
         private void Start()
@@ -29,6 +31,8 @@ namespace Assets.Scripts.Game
                     ringSlots[i][j].transform.SetParent(transform);
                 }
             }
+
+            ConnectionHandler.field = this;
         }
         
         void Update()

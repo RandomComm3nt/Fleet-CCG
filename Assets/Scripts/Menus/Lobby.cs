@@ -11,6 +11,7 @@ namespace Assets.Scripts.Menus
   
         private void Start()
         {
+            ConnectionHandler.client.Multiplayer.DevelopmentServer = new ServerEndpoint("localhost", 8184);
             ConnectionHandler.client.Multiplayer.ListRooms("1v1", null, 25, 0, new Callback<RoomInfo[]>(HandleRooms), new Callback<PlayerIOError>(HandleError));
         }
         
@@ -21,7 +22,7 @@ namespace Assets.Scripts.Menus
 
         public void CreateGame()
         {
-            ConnectionHandler.client.Multiplayer.CreateJoinRoom(null, "1v1", true, null, null, new Callback<Connection>(HandleConnect), new Callback<PlayerIOError>(HandleError));
+            ConnectionHandler.client.Multiplayer.CreateJoinRoom("Room", "1v1", true, null, null, new Callback<Connection>(HandleConnect), new Callback<PlayerIOError>(HandleError));
         }
 
         private void HandleRooms(RoomInfo[] rooms)
@@ -31,6 +32,7 @@ namespace Assets.Scripts.Menus
 
         private void HandleConnect(Connection connection)
         {
+            Debug.Log("Created");
             ConnectionHandler.EnterGame(connection);
             SceneManager.LoadScene("Game");
         }

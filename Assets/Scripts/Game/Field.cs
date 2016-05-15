@@ -29,8 +29,6 @@ namespace Assets.Scripts.Game
                     ringSlots[i][j].transform.SetParent(transform);
                 }
             }
-
-            ToBattle();
         }
         
         void Update()

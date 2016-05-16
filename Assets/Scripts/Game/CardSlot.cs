@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
+using Assets.Scripts.Game.Cards;
 
 namespace Assets.Scripts.Game
 {
-    public class CardSlot : MonoBehaviour
+    public class CardSlot : TweenBehaviour
     {
         private Vector3 defaultPosition;
         private Quaternion defaultRotation;
+        private Card card;
 
         public void AssignPosition(Vector3 localPos, Quaternion localRot)
         {
@@ -16,17 +18,6 @@ namespace Assets.Scripts.Game
             transform.localRotation = localRot;
         }
 
-        public void TweenToDefault()
-        {
-
-        }
-
-        private void TweenTo(Vector3 position, Quaternion rotation)
-        {
-            transform.localPosition = position;
-            transform.localRotation = rotation;
-        }
-
         public static void BattlePositions(CardSlot c1, CardSlot c2)
         {
             Vector2 u = new Vector2(c1.transform.localPosition.x, c1.transform.localPosition.z);
@@ -34,13 +25,13 @@ namespace Assets.Scripts.Game
             float t = u.y / (u.y - v.y);
             float w = u.x + t * (u.x - v.x);
             float theta = Mathf.Atan(u.y / (w - u.x)) * Mathf.Rad2Deg;
-            c1.TweenTo(c1.defaultPosition, Quaternion.Euler(0, 90 - theta, 90));
-            c2.TweenTo(c2.defaultPosition, Quaternion.Euler(0, 90 - theta, 90));
+            c1.Tween(c1.defaultPosition, Quaternion.Euler(0, 90 - theta, 90), 20);
+            c2.Tween(c2.defaultPosition, Quaternion.Euler(0, 90 - theta, 90), 20);
         }
 
         public void ToScreenSpace(Vector2 position, float distance = 1f)
         {
-            TweenTo(CameraControl.singleton.ScreenSpaceToWorldSpace(position, distance), Quaternion.Euler(0, 0, 310));
+            Tween(CameraControl.singleton.ScreenSpaceToWorldSpace(position, distance), Quaternion.Euler(0, 0, 310), 20);
         }
     }
 }

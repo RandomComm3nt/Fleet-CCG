@@ -1,4 +1,5 @@
 ﻿using PlayerIOClient;
+using System.Collections.Generic;
 
 namespace Assets.Scripts.Game
 {
@@ -6,7 +7,7 @@ namespace Assets.Scripts.Game
     {
         public static Client client;
         public static Connection connection;
-        public static Field field;
+        public static GameController game;
 
         public static void EnterGame(Connection c)
         {
@@ -16,7 +17,39 @@ namespace Assets.Scripts.Game
 
         private static void HandleMessage(object sender, Message e)
         {
-            
+            bool localPlayer = (e.GetString(0) == client.ConnectUserId);
+            switch (e.Type)
+            {
+                case "PlayerData":
+                    List<int> deck = new List<int>();
+                    for (uint i = 0; i < e.Count; i++)
+                        deck.Add(e.GetInt(i));
+                    game.SetPlayerDeck(deck);
+                    break;
+                case "OpponentData":
+                    break;
+                case "Draw":
+                    if (localPlayer)
+                        game.PlayerDraw(e.GetInt(1));
+                    else
+                        game.OpponentDraw(e.GetInt(1));
+                    break;
+                case "Mill":
+                    if (localPlayer)
+                        game.PlayerMill(e.GetInt(1));
+                    else
+                        game.OpponentMill(e.GetInt(1));
+                    break;
+                case "Discard":
+                    if (localPlayer)
+                        game.PlayerDiscard(e.GetInt(1));
+                    else
+                        game.OpponentDiscard(e.GetInt(1));
+                    break;
+                case "Destroy":
+                    game.DestroyCard(e.GetInt(0), e.GetInt(1));
+                    break;
+            }
         }
     }
 }

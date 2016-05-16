@@ -45,5 +45,5 @@ namespace Assets.Scripts.Menus
             passwordField.text = "Testing123";
             Login();
         }
-}
+    }
 }

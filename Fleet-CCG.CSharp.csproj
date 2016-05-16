@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.3.1f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -73,13 +71,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Game\Tween.cs" />
-    <Compile Include="Assets\Scripts\Menus\Lobby.cs" />
-    <Compile Include="Assets\Scripts\Menus\LoginScreen.cs" />
     <Compile Include="Assets\Scripts\Game\CameraControl.cs" />
     <Compile Include="Assets\Scripts\Game\CardSlot.cs" />
+    <Compile Include="Assets\Scripts\Game\Cards\Card.cs" />
+    <Compile Include="Assets\Scripts\Game\Cards\Ship.cs" />
     <Compile Include="Assets\Scripts\Game\ConnectionHandler.cs" />
-    <Compile Include="Assets\Scripts\Game\Field.cs" />
+    <Compile Include="Assets\Scripts\Game\GameController.cs" />
+    <Compile Include="Assets\Scripts\Game\TweenBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Menus\CardEditor.cs" />
+    <Compile Include="Assets\Scripts\Menus\Lobby.cs" />
+    <Compile Include="Assets\Scripts\Menus\LoginScreen.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

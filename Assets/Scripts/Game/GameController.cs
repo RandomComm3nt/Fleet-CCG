@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Assets.Scripts.Game
 {
-    public class Field : MonoBehaviour
+    public class GameController : MonoBehaviour
     {
         private const int SLOTS_PER_RING = 10;
         private const float RING_SPACING = 1f;
@@ -11,6 +11,8 @@ namespace Assets.Scripts.Game
 
         private CardSlot planetSlot;
         private CardSlot[][] ringSlots;
+
+        [SerializeField] private Transform field;
 
         private List<CardSlot> playerHand;
 
@@ -28,17 +30,56 @@ namespace Assets.Scripts.Game
                     float theta = ((j + 0.5f * (i % 2)) / SLOTS_PER_RING) * Mathf.PI * 2;
                     float r = i * RING_SPACING + RING_SPACING + INNER_RING_SPACING;
                     ringSlots[i][j].AssignPosition(new Vector3(r * Mathf.Cos(theta), 0, r * Mathf.Sin(theta)), Quaternion.Euler(0, -theta * Mathf.Rad2Deg, 0));
-                    ringSlots[i][j].transform.SetParent(transform);
+                    ringSlots[i][j].transform.SetParent(field);
                 }
             }
 
-            ConnectionHandler.field = this;
+            ConnectionHandler.game = this;
         }
-        
-        void Update()
+
+        #region Card Movement
+
+        public void SetPlayerDeck(List<int> cards)
         {
 
         }
+
+        public void PlayerDraw(int n = 1)
+        {
+
+        }
+
+        public void OpponentDraw(int n = 1)
+        {
+
+        }
+
+        public void PlayerMill(int n = 1)
+        {
+
+        }
+
+        public void OpponentMill(int n = 1)
+        {
+
+        }
+
+        public void PlayerDiscard(int i)
+        {
+
+        }
+
+        public void OpponentDiscard(int i)
+        {
+
+        }
+
+        public void DestroyCard(int ring, int index)
+        {
+
+        }
+
+        #endregion
 
         private void ToBattle()
         {

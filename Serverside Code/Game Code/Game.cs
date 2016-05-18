@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Collections;
 using PlayerIO.GameLibrary;
-using System.Drawing;
 
 namespace FleetServer
 {
 	public class Player : BasePlayer
     {
-		public float posx = 0;
-		public float posz = 0;
-		public int toadspicked = 0;
+        public List<int> deck;
 	}
 
 	[RoomType("1v1")]
@@ -23,6 +18,7 @@ namespace FleetServer
 		public override void GameStarted()
         {
 			Console.WriteLine("Game is started: " + RoomId);
+            PreloadPlayerObjects = true;
 		}
 
 		public override void GameClosed()
@@ -32,10 +28,38 @@ namespace FleetServer
 
 		public override void UserJoined(Player player)
         {
-			foreach(Player pl in Players) {
-				if(pl.ConnectUserId != player.ConnectUserId) {
-					pl.Send("PlayerJoined", player.ConnectUserId, 0, 0);
-					player.Send("PlayerJoined", pl.ConnectUserId, pl.posx, pl.posz);
+            if (!player.PlayerObject.Contains("Decks"))
+            {
+                player.PlayerObject.Set("Decks", new DatabaseArray());
+            }
+            if (player.PlayerObject.GetArray("Decks").Count == 0)
+            {
+                DatabaseObject o = new DatabaseObject();
+                DatabaseArray a = new DatabaseArray();
+                for (int i = 0; i < 30; i++)
+                {
+                    a.Add(i);
+                }
+                o.Set("Cards", a);
+                player.PlayerObject.GetArray("Decks").Add(o);
+                player.PlayerObject.Save();
+            }
+
+            DatabaseArray cards = player.PlayerObject.GetArray("Decks").GetObject(0).GetArray("Cards");
+            player.deck = new List<int>();
+            Message m = Message.Create("PlayerData");
+            for (int i = 0; i < cards.Count; i++)
+            {
+                player.deck.Add(cards.GetInt(i));
+                m.Add(player.deck[i]);
+            }
+            player.Send(m);
+
+			foreach(Player pl in Players)
+            {
+				if(pl.ConnectUserId != player.ConnectUserId)
+                {
+                    pl.Send("OpponentData", player.ConnectUserId, player.deck.Count);
 				}
 			}
 		}

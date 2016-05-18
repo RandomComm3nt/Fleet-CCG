@@ -17,7 +17,6 @@ namespace Assets.Scripts.Game
 
         private static void HandleMessage(object sender, Message e)
         {
-            bool localPlayer = (e.GetString(0) == client.ConnectUserId);
             switch (e.Type)
             {
                 case "PlayerData":
@@ -29,19 +28,19 @@ namespace Assets.Scripts.Game
                 case "OpponentData":
                     break;
                 case "Draw":
-                    if (localPlayer)
+                    if (e.GetString(0) == client.ConnectUserId)
                         game.PlayerDraw(e.GetInt(1));
                     else
                         game.OpponentDraw(e.GetInt(1));
                     break;
                 case "Mill":
-                    if (localPlayer)
+                    if (e.GetString(0) == client.ConnectUserId)
                         game.PlayerMill(e.GetInt(1));
                     else
                         game.OpponentMill(e.GetInt(1));
                     break;
                 case "Discard":
-                    if (localPlayer)
+                    if (e.GetString(0) == client.ConnectUserId)
                         game.PlayerDiscard(e.GetInt(1));
                     else
                         game.OpponentDiscard(e.GetInt(1));

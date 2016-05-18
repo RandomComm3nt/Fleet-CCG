@@ -14,6 +14,7 @@ namespace Assets.Scripts.Game
 
         [SerializeField] private Transform field;
 
+        private List<CardSlot> playerDeck;
         private List<CardSlot> playerHand;
 
         [SerializeField] private GameObject slotPrefab;
@@ -41,7 +42,14 @@ namespace Assets.Scripts.Game
 
         public void SetPlayerDeck(List<int> cards)
         {
-
+            playerDeck = new List<CardSlot>();
+            for (int i = 0; i < cards.Count; i++)
+            {
+                CardSlot c = Instantiate(slotPrefab).GetComponent<CardSlot>();
+                c.transform.SetParent(transform, false);
+                c.ToScreenSpace(new Vector2(), 3.2f);
+                playerDeck.Add(c);
+            }
         }
 
         public void PlayerDraw(int n = 1)

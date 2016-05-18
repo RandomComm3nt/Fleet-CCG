@@ -31,6 +31,7 @@ namespace Assets.Scripts.Game
         {
             if (Tweening)
             {
+                tweenCounter++;
                 float t;
                 switch(style)
                 {

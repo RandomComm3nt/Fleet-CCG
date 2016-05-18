@@ -18,7 +18,8 @@ ExportedObj/
 *.pidb
 *.booproj
 *.svd
-
+/Serverside Code/Player.IO Test Server Project/
+/Serverside Code/Game Code/obj
 
 # Unity3D generated meta files
 *.pidb.meta
